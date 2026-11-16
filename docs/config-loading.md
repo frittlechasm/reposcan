@@ -10,7 +10,7 @@ flowchart TD
     B --> D{command}
     D -->|"version, update, help, completion"| E["run command<br/>(config not read)"]
     D -->|root| F["RunE: read config.toml<br/>(write the defaults first if the file is missing)"]
-    F -->|read error| R1["return error"]
+    F -->|stat error| R1["return error"]
     F --> G["readFlags: apply only flags the user set"]
     G -->|"bad -o / -f value"| R1
     G --> V["validate the merged config"]
@@ -29,6 +29,11 @@ flowchart TD
 
 - Only the root command reads `~/.config/reposcan/config.toml`.
   - `--help`, `version`, `update` and `completion` work even when the config is broken.
+- Only a failure to stat `config.toml` returns an error.
+  - An unreadable or unparsable `config.toml` is currently ignored, and the run continues.
+    - Unreadable: every key keeps its `Defaults()` value.
+    - Unparsable: keys before the parse error are applied, the rest keep their defaults.
+  - This is a known issue, tracked by `bug_malformed_config` in `scripts/smoke-test.sh`.
 - Validation runs once, after flags are applied.
   - A flag can replace a bad config value, for example `reposcan -r ~/Code` when `roots` in the config points to a missing directory.
 - Errors are returned to `Execute()`, which prints `Error: ...` and exits with status 1.

@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- fix/config-loading-followups: map a pre-v1.3.7 `output.type = "table"` to interactive while loading `config.toml`, with a test, and correct `docs/config-loading.md`: only a stat error on `config.toml` stops a run by @frittlechasm in [#112](https://github.com/mabd-dev/reposcan/pull/112)
 - fix/config-startup-flow: `--help`, `version` and `update` work with a broken config.toml, `--help` no longer shows config values as defaults, and CLI flags can override invalid config values by @frittlechasm in [#104](https://github.com/mabd-dev/reposcan/pull/104)
 - fix/partial-config-defaults: keys missing from `config.toml` fall back to their defaults instead of becoming empty, so a config with only `roots` works and the default `dirIgnore` patterns still apply by @mabd-dev in [#108](https://github.com/mabd-dev/reposcan/pull/108)
 - docs/agents-behavior-change-rules: `AGENTS.md` rules to flag backward-incompatible changes before implementing, check shared code changes against `main`, and keep review fixes to the PR's scope by @mabd-dev in [#109](https://github.com/mabd-dev/reposcan/pull/109)

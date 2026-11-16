@@ -34,10 +34,6 @@ var RootCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		// "table" was the default before v1.3.7 and may still be in older config files.
-		if configs.Output.Type == config.OutputTable {
-			configs.Output.Type = config.OutputInteractive
-		}
 
 		// Validate only after flags are applied, so a flag can replace a bad config value.
 		err = readFlags(cmd, &configs)

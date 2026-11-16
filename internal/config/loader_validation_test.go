@@ -219,6 +219,16 @@ func TestCreateOrReadConfigs_PartialFileKeepsDefaults(t *testing.T) {
 				}
 			},
 		},
+		{
+			// run() has no case for "table", so an unmapped value prints nothing.
+			name: "pre-v1.3.7 output type table maps to interactive",
+			toml: "[output]\ntype = \"table\"",
+			check: func(t *testing.T, got Config) {
+				if got.Output.Type != OutputInteractive {
+					t.Errorf("output = %q, want %q", got.Output.Type, OutputInteractive)
+				}
+			},
+		},
 	}
 
 	for _, tt := range tests {

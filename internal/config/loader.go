@@ -54,6 +54,10 @@ func CreateOrReadConfigs(path string) (Config, error) {
 	} else {
 		writeToFile(configs, path)
 	}
+	// "table" was the default before v1.3.7 and may still be in older config files.
+	if configs.Output.Type == OutputTable {
+		configs.Output.Type = OutputInteractive
+	}
 
 	return configs, nil
 
